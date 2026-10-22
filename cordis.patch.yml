@@ -1,0 +1,6 @@
+# dsh-agents-switcher bundle layer.
+# Host plugin: preset library + per-session selection + agent/pre-step interception.
+# Client plugin: Settings management page + composer toolbar selector.
+- insert:
+    - id: dsh-agents-switcher
+      name: dsh-agents-switcher

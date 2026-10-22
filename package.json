@@ -1,0 +1,37 @@
+{
+  "name": "dsh-agents-switcher",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Selectable AGENTS.md injection for DeepSeek Harness: a global AGENTS preset library managed in Settings, a per-session selector in the composer toolbar; default keeps DSH's original project→global AGENTS.md lookup untouched, a selection replaces the injected workspace instructions with a per-session snapshot copy.",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "lib/*.js",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/schemastery": "^3.18.4"
+  }
+}
