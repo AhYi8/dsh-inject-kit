@@ -1,6 +1,7 @@
-# dsh-agents-switcher bundle layer.
-# Host plugin: preset library + per-session selection + agent/pre-step interception.
-# Client plugin: Settings management page + composer toolbar selector.
+# dsh-inject-kit bundle layer。
+# Host 插件：AGENTS 预设选择 + agent/pre-step 拦截（AGENTS 替换、# 引用快照替换）。
+# Client 插件：设置页管理区块 + 输入框工具栏选择器 + # 下拉 + 气泡 chip 装饰。
+# 注意：由 dsh-agents-switcher 改名而来；旧插件卸载、新插件重装后才生效。
 - insert:
-    - id: dsh-agents-switcher
-      name: dsh-agents-switcher
+    - id: dsh-inject-kit
+      name: dsh-inject-kit
