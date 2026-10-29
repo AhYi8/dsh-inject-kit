@@ -1,6 +1,6 @@
 {
   "name": "dsh-inject-kit",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "description": "Inject Kit for DeepSeek Harness: selectable AGENTS.md presets (per-session composer selector, default keeps DSH's original AGENTS.md behavior) plus a reusable prompt library referenced as #Name in the composer; references are replaced with a send-time snapshot of the prompt content, transcripts keep #Name.",
   "main": "lib/index.js",
