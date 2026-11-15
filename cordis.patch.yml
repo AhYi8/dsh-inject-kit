@@ -1,7 +1,22 @@
 # dsh-inject-kit bundle layer。
-# Host 插件：AGENTS 预设选择 + agent/pre-step 拦截（AGENTS 替换、# 引用快照替换）。
+# Host 插件：AGENTS 预设选择 + agent/pre-step 拦截（AGENTS 替换、# 引用快照替换），
+#   并把会话标题配置动态下发到 session-title 提供方（设置页 > 注入工具箱 > 会话标题）。
 # Client 插件：设置页管理区块 + 输入框工具栏选择器 + # 下拉 + 气泡 chip 装饰。
 # 注意：由 dsh-agents-switcher 改名而来；旧插件卸载、新插件重装后才生效。
 - insert:
     - id: dsh-inject-kit
       name: dsh-inject-kit
+# 启用 AI 会话标题（first-prompt 提供方）：experimental-session-titles-bundle 默认
+# 把该行 disabled: true，这里重新打开并提供一份合法兜底 config（config 是整体
+# 替换而非合并，五个字段全部必填）。运行中的实际参数由 inject-kit 设置页动态
+# 下发（fiber.update），此处的数值与设置页默认值保持一致。目标条目不存在
+# （标题 bundle 未启用）时本条会被警告跳过，无副作用。
+- id: session-title-llm
+  name: '@deepseek-ai/dsh-session-title-first-prompt-llm'
+  disabled: false
+  config:
+    targetWords: 5
+    targetCjkCharacters: 10
+    maxInputBytes: 524288
+    maxOutputTokens: 4096
+    timeoutMs: 60000
