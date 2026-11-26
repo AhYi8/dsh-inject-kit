@@ -1,7 +1,13 @@
 # dsh-inject-kit bundle layer。
 # Host 插件：AGENTS 预设选择 + agent/pre-step 拦截（AGENTS 替换、# 引用快照替换），
-#   并把会话标题配置动态下发到 session-title 提供方（设置页 > 注入工具箱 > 会话标题）。
-# Client 插件：设置页管理区块 + 输入框工具栏选择器 + # 下拉 + 气泡 chip 装饰。
+#   并把会话标题配置动态下发到 session-title 提供方（设置页 > 注入工具箱 > 会话标题）；
+#   第四项功能「固定身份」：system-prompt/assemble waterfall 拦截，按会话替换或
+#   置空 harness:identity 段（interpolate:false 按字面量送达），下一轮消息即生效。
+#   REST 端点：/dsh-inject-kit/identity（会话覆盖）与 /dsh-inject-kit/identity/presets
+#   （预设库 CRUD）。边界：对 minimal（complete 人设）无效（瀑布后被强制还原）；
+#   切换身份会使该会话供应商 KV 缓存失效一次。
+# Client 插件：设置页管理区块 + 输入框工具栏选择器（AGENTS 与身份各一）+
+#   # 下拉 + 气泡 chip 装饰。
 # 注意：由 dsh-agents-switcher 改名而来；旧插件卸载、新插件重装后才生效。
 - insert:
     - id: dsh-inject-kit
