@@ -64,20 +64,35 @@ test('命中目标插件：对每个 fiber 下发完整配置', () => {
   assert.equal(result.found, true);
   assert.equal(result.updated, 2);
   assert.deepEqual(result.errors, []);
+  assert.deepEqual(result.providers, ['session-title-first-prompt-llm']);
   // 整体替换语义：必须下发全部五个字段（缺省项补默认值），不能只发变更项
   assert.deepEqual(fiberA.calls, [{ ...GOOD, maxInputBytes: 1024 }]);
   assert.deepEqual(fiberB.calls, [{ ...GOOD, maxInputBytes: 1024 }]);
 });
 
+test('命中 all-prompts 提供方（标题 bundle 启用模式）：同样下发完整配置', () => {
+  // 启用 dsh-experimental-session-titles-bundle 后，first-prompt 行被禁用、
+  // registry 里只有 all-prompts 运行时——配置必须能跟过去
+  const fiber = fakeFiber();
+  const ctx = { registry: fakeRegistry([
+    { name: 'session-title-all-prompts-llm', fibers: [fiber] },
+  ]) };
+  const result = applySessionTitleConfig(ctx, GOOD);
+  assert.equal(result.found, true);
+  assert.equal(result.updated, 1);
+  assert.deepEqual(result.providers, ['session-title-all-prompts-llm']);
+  assert.deepEqual(fiber.calls, [GOOD]);
+});
+
 test('未命中（标题 bundle 未启用）：静默返回 found=false', () => {
   const ctx = { registry: fakeRegistry([{ name: 'dsh-other-plugin', fibers: [fakeFiber()] }]) };
   const result = applySessionTitleConfig(ctx, GOOD);
-  assert.deepEqual(result, { found: false, updated: 0, errors: [] });
+  assert.deepEqual(result, { found: false, updated: 0, errors: [], providers: [] });
 });
 
 test('ctx 无 registry（异常宿主）：不抛错', () => {
-  assert.deepEqual(applySessionTitleConfig({}, GOOD), { found: false, updated: 0, errors: [] });
-  assert.deepEqual(applySessionTitleConfig(undefined, GOOD), { found: false, updated: 0, errors: [] });
+  assert.deepEqual(applySessionTitleConfig({}, GOOD), { found: false, updated: 0, errors: [], providers: [] });
+  assert.deepEqual(applySessionTitleConfig(undefined, GOOD), { found: false, updated: 0, errors: [], providers: [] });
 });
 
 test('fiber.update 抛错（原生 Schema 校验失败）：错误被收集，其余 fiber 继续下发', () => {
